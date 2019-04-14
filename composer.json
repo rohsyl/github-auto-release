@@ -1,0 +1,21 @@
+{
+    "name": "rohsyl/github-auto-release",
+    "description": "A github webhook to automatically create an update repository for your app",
+    "type": "library",
+    "require": {
+        "illuminate/http": "^5.8",
+        "vlucas/phpdotenv": "^3.3@dev"
+    },
+    "authors": [
+        {
+            "name": "Sylvain Roh",
+            "email": "syzin12@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "rohsyl\\GithubAutoRelease\\": "src"
+        }
+    }
+}
