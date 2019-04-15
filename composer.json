@@ -5,7 +5,8 @@
     "require": {
         "illuminate/http": "^5.8",
         "vlucas/phpdotenv": "^3.3",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "authors": [
         {

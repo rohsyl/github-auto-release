@@ -1,10 +1,10 @@
 <?php
 namespace rohsyl\GithubAutoRelease;
 
+use rohsyl\GithubAutoRelease\Github\Api;
 use rohsyl\GithubAutoRelease\Utils\Config;
-use Monolog\Logger;
 use Illuminate\Http\Request;
-use Monolog\Handler\StreamHandler;
+use rohsyl\GithubAutoRelease\Utils\Log;
 
 class AutoRelease
 {
@@ -17,23 +17,39 @@ class AutoRelease
     }
 
     public function handle() {
-        $request = new Request();
+        $request = Request::capture();
 
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
 
-            $localToken = Config::get('GITHUB_SECRET_TOKEN');
+        $localToken = Config::get('GITHUB_SECRET_TOKEN');
 
         $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
 
         $this->log->debug('Request get : \n');
 
-        if (hash_equals($githubHash, $localHash)){
+        $this->log->debug($githubHash);
+        $this->log->debug($localHash);
 
-            print_r($request->getBody());
-            print_r($githubPayload);
+        if ($githubHash === $localHash){
 
-            $this->log->debug($request->getBody());
+            $payload = $request->json()->all();
+
+            $this->log->debug($githubPayload);
+
+            if(in_array('release', $payload['hook']['events'])) {
+
+                $url = strtok($payload['repository']['releases_url'], '{');
+
+                $this->log->debug('Request to ' . $url . ' to get release list.');
+
+                $releases = Api::getReleases($url);
+            }
+        }
+        else {
+            $this->log->warning('Unallowed request from ' . $request->ip());
+            header("HTTP/1.1 401 Unauthorized");
+            exit;
         }
 
     }
@@ -47,8 +63,6 @@ class AutoRelease
             ini_set('display_errors', 1);
         }
 
-        $this->log = new Logger('github-auto-release');
-        $this->log->pushHandler(new StreamHandler(Config::get('LOG_PATH'), Logger::DEBUG));
-
+        $this->log = Log::get();
     }
 }
