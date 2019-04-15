@@ -27,7 +27,7 @@ class AutoRelease
         $localToken = Config::get('GITHUB_SECRET_TOKEN');
 
         $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
-        
+
         $this->log->debug('Request get : \n');
 
         if (hash_equals($githubHash, $localHash)){
