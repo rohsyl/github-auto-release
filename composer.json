@@ -4,7 +4,8 @@
     "type": "library",
     "require": {
         "illuminate/http": "^5.8",
-        "vlucas/phpdotenv": "^3.3@dev"
+        "vlucas/phpdotenv": "^3.3@dev",
+        "monolog/monolog": "^2.0@dev"
     },
     "authors": [
         {
