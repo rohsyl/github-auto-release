@@ -7,9 +7,9 @@ class Config
 {
     public static function init($root) {
         $dotenv = Dotenv::create($root);
+        $dotenv->load();
         $dotenv->required('GITHUB_SECRET_TOKEN');
         $dotenv->required('LOG_PATH');
-        $dotenv->load();
     }
 
     public static function get($key) {
