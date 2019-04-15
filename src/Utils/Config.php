@@ -5,9 +5,10 @@ use Dotenv\Dotenv;
 
 class Config
 {
-    public static function init() {
-        $dotenv = Dotenv::create(__DIR__);
+    public static function init($root) {
+        $dotenv = Dotenv::create($root);
         $dotenv->required('GITHUB_SECRET_TOKEN');
+        $dotenv->required('LOG_PATH');
         $dotenv->load();
     }
 

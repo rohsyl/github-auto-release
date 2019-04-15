@@ -9,13 +9,11 @@ use Monolog\Handler\StreamHandler;
 class AutoRelease
 {
     private $log;
+    private $root;
 
-    public function __construct() {
-
-        Config::init();
-
-        $this->log = new Logger('github-auto-release');
-        $this->log->pushHandler(new StreamHandler(Config::get('LOG_PATH'), Logger::DEBUG));
+    public function __construct($root) {
+        $this->root = $root;
+        $this->init();
     }
 
     public function handle() {
@@ -24,7 +22,7 @@ class AutoRelease
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
 
-        $localToken = Config::get('GITHUB_SECRET_TOKEN');
+            $localToken = Config::get('GITHUB_SECRET_TOKEN');
 
         $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
 
@@ -37,6 +35,20 @@ class AutoRelease
 
             $this->log->debug($request->getBody());
         }
+
+    }
+
+    private function init() {
+
+        Config::init($this->root);
+
+        if(Config::get('ENABLE_DEBUG')) {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+        }
+
+        $this->log = new Logger('github-auto-release');
+        $this->log->pushHandler(new StreamHandler(Config::get('LOG_PATH'), Logger::DEBUG));
 
     }
 }

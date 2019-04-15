@@ -4,8 +4,8 @@
     "type": "library",
     "require": {
         "illuminate/http": "^5.8",
-        "vlucas/phpdotenv": "^3.3@dev",
-        "monolog/monolog": "^2.0@dev"
+        "vlucas/phpdotenv": "^3.3",
+        "monolog/monolog": "^1.24"
     },
     "authors": [
         {
@@ -13,7 +13,7 @@
             "email": "syzin12@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "rohsyl\\GithubAutoRelease\\": "src"
