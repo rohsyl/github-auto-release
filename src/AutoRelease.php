@@ -3,7 +3,7 @@ namespace rohsyl\GithubAutoRelease;
 
 use rohsyl\GithubAutoRelease\Utils\Config;
 use Monolog\Logger;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Monolog\Handler\StreamHandler;
 
 class AutoRelease
@@ -17,7 +17,7 @@ class AutoRelease
     }
 
     public function handle() {
-        $request = Request::instance();
+        $request = new Request();
 
         $githubPayload = $request->getContent();
         $githubHash = $request->header('X-Hub-Signature');
