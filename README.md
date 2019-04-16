@@ -30,6 +30,8 @@ Set the **Payload URL** to your webserver URL (SSL recommended).
 
 Set the **Content type** to `application/json`. 
 
+Set the **Secret** with a nice random token. And don't forget it because we need it for configure the app.
+
 Set **Which events would you like to trigger this webhook?** to `releases` only.
 
 Check the **Active** checkbox and save.
