@@ -36,7 +36,7 @@ class ReleaseManager
     }
 
     private function saveFile($filePath, array $content) {
-        if(is_writable($filePath)) {
+        if(is_writable(dirname($filePath))) {
             file_put_contents($filePath, json_encode($content, JSON_PRETTY_PRINT));
             $this->log->info('Write json file : ' . $filePath);
         }

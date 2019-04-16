@@ -39,7 +39,7 @@ class AutoRelease
             $this->log->debug($githubPayload);
 
             // it's the test payload
-            if(in_array('hook', $payload)) {
+            if(in_array('hook', array_keys($payload))) {
                 $this->log->info('Test hook');
                 if(in_array('release', $payload['hook']['events'])) {
                     $this->log->info('Release event');
@@ -56,7 +56,7 @@ class AutoRelease
                     $rmanager->updateJson();
                 }
             }
-            else if (in_array('release', $payload)) {
+            else if (in_array('release', array_keys($payload))) {
                 $this->log->info('New release out !');
                 $this->log->info('Release version : ' . $payload['release']['tag_name']);
 
