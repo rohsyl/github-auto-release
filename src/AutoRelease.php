@@ -2,6 +2,7 @@
 namespace rohsyl\GithubAutoRelease;
 
 use rohsyl\GithubAutoRelease\Github\Api;
+use rohsyl\GithubAutoRelease\Release\ReleaseManager;
 use rohsyl\GithubAutoRelease\Utils\Config;
 use Illuminate\Http\Request;
 use rohsyl\GithubAutoRelease\Utils\Log;
@@ -37,14 +38,37 @@ class AutoRelease
 
             $this->log->debug($githubPayload);
 
-            if(in_array('release', $payload['hook']['events'])) {
+            // it's the test payload
+            if(in_array('hook', $payload)) {
+                $this->log->info('Test hook');
+                if(in_array('release', $payload['hook']['events'])) {
+                    $this->log->info('Release event');
 
-                $url = strtok($payload['repository']['releases_url'], '{');
+                    $url = strtok($payload['repository']['releases_url'], '{');
 
-                $this->log->debug('Request to ' . $url . ' to get release list.');
+                    $this->log->info('Request to ' . $url . ' to get release list.');
 
-                $releases = Api::getReleases($url);
+                    $release = Api::getReleases($url);
+
+                    $rmanager = new ReleaseManager($release);
+
+                    $this->log->info('Update json files');
+                    $rmanager->updateJson();
+                }
             }
+            else if (in_array('release', $payload)) {
+                $this->log->info('New release out !');
+                $this->log->info('Release version : ' . $payload['release']['tag_name']);
+
+                $release = Api::toSimplified($payload['release']);
+
+                $rmanager = new ReleaseManager($release);
+                $rmanager->updateJson();
+
+                $this->log->info('Update json files');
+            }
+
+            $this->log->info('Done');
         }
         else {
             $this->log->warning('Unallowed request from ' . $request->ip());

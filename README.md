@@ -19,11 +19,17 @@ ENABLE_DEBUG=true
 GITHUB_SECRET_TOKEN=...
 
 LOG_PATH=logs/app.log
+
+JSON_VERSION_PATH=./
 ```
+
+`ENABLE_DEBUG` define if debug is enabled or disabled.
 
 `GITHUB_SECRET_TOKEN` is the secret defined while you created the webhook on Github.
 
-`LOG_PATH` is the path to the log relatively from the root of your project
+`LOG_PATH` is the path to the log file. This entry is optional. By default logs are located under `logs/app.log`
+
+`JSON_VERSION_PATH` is the path where json files with informations about each releases will be stored. This entry is optional. By defaults files are stored in the current directory
 
 ## Exemple
 
