@@ -3,8 +3,12 @@
     "description": "A github webhook to automatically create an update repository for your app",
     "type": "library",
     "require": {
+        "php": ">=7.1.3",
+        "ext-json": "*",
         "illuminate/http": "^5.8",
-        "vlucas/phpdotenv": "^3.3@dev"
+        "vlucas/phpdotenv": "^3.3",
+        "monolog/monolog": "^1.24",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "authors": [
         {
@@ -12,7 +16,7 @@
             "email": "syzin12@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "rohsyl\\GithubAutoRelease\\": "src"
