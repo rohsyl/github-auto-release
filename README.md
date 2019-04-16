@@ -93,3 +93,8 @@ Go to your repository on github and go to settings > Webhooks > Edit your webhoo
 Down the page there is a list with all delivered payload. Click on the `...` to display details of the payload and them click on Redeliver to send it again and test.
 
 ## Enjoy !
+
+Now that Github Auto Release is working well you can imagine extend it by creating some functions in your project that will request https://update.yourdomain.tld/current.json to get informations about the last versions of your project.
+Then you can download the `archive` and extract it locally. Then you can replace every files by the ones from the archive.
+
+You also can use this library [rohsyl/laraupdater](https://github.com/rohsyl/laraupdater) if you're working with Laravel.
